@@ -1,0 +1,50 @@
+class Solution {
+public:
+    double f(int xC,int yC,int x,int y)
+    {
+        return sqrt(pow(abs(xC-x),2)+pow(abs(yC-y),2));
+    }
+    bool checkOverlap(int r, int xC, int yC, int x1, int y1, int x2, int y2) {
+        int x3=x2,y3=y1,x4=x1,y4=y2;
+        double mi=1e9;
+        int smx,smy;
+        for(int i=y1;i<=y4;i++)
+        {
+            double d=f(xC,yC,x1,i);
+            if(mi>d)
+            {
+                mi=d;
+                smx=x1,smy=i;
+            }
+        }
+        for(int i=y3;i<=y2;i++)
+        {
+            double d=f(xC,yC,x3,i);
+            if(mi>d)
+            {
+                mi=d;
+                smx=x3,smy=i;
+            }
+        }
+        for(int i=x1;i<=x3;i++)
+        {
+            double d=f(xC,yC,i,y1);
+            if(mi>d)
+            {
+                mi=d;
+                smx=i,smy=y1;
+            }
+        }
+        for(int i=x4;i<=x2;i++)
+        {
+            double d=f(xC,yC,i,y4);
+            if(mi>d)
+            {
+                mi=d;
+                smx=i,smy=y4;
+            }
+        }
+        if(mi<=r || (x1<=xC && x3>=xC && y2>=yC && y3<=yC) || (x1>=xC && x3<=xC && y2<=yC && y3>=yC)) return true;
+        return false;
+    }
+};
