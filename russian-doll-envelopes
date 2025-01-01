@@ -1,0 +1,22 @@
+class Solution {
+    static bool comp(vector<int>& a, vector<int>& b)
+    {
+        if(a[0]==b[0]) return a[1]>b[1];
+        return a[0]<b[0];
+    }
+public:
+    int maxEnvelopes(vector<vector<int>>& e) {
+        int n=e.size();
+        sort(e.begin(),e.end(),comp); 
+        vector<int>ans;
+        
+        for(int i=0;i<n;i++)
+        {
+            int ele=e[i][1];
+            int idx=lower_bound(ans.begin(),ans.end(),e[i][1])-ans.begin();
+            if(idx<ans.size()) ans[idx]=ele;
+            else ans.push_back(ele);
+        }
+        return ans.size();
+    }
+};
