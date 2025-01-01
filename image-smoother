@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<vector<int>> imageSmoother(vector<vector<int>>& img) {
+        int n=img.size();
+        int m=img[0].size();
+        vector<vector<int>> ans(n,vector<int>(m,0));
+
+        vector<int> r{-1,-1,-1,0,0,0,1,1,1};
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                int temp=0,cnt=0;
+                for(int k=0;k<9;k++)
+                {
+                    int nrow=i+r[k];
+                    int ncol=j+c[k];
+                    if(nrow>=0 && ncol>=0 && nrow<n && ncol<m)
+                    {
+                        temp+=img[nrow][ncol];
+                        cnt++;
+                    }
+                }
+                ans[i][j]=temp/cnt;
+            }
+        }
+        return ans;
+    }
+};
