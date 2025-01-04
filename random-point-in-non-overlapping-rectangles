@@ -1,0 +1,31 @@
+class Solution {
+    vector<vector<int>> rects;
+    vector<int> prefixSum;
+    int totalPoints;
+    mt19937 rng;
+    uniform_int_distribution<int> dist;
+
+public:
+    Solution(vector<vector<int>>& rects) : rects(rects), totalPoints(0), rng(random_device{}()) {
+        for (const auto& rect : rects) {
+            int points = (rect[2] - rect[0] + 1) * (rect[3] - rect[1] + 1);
+            totalPoints += points;
+            prefixSum.push_back(totalPoints);
+        }
+        dist = uniform_int_distribution<int>(1, totalPoints);
+    }
+    
+    vector<int> pick() {
+        int target = dist(rng);
+        int rectIndex = lower_bound(prefixSum.begin(), prefixSum.end(), target) - prefixSum.begin();
+        const auto& rect = rects[rectIndex];
+        
+        int xRange = rect[2] - rect[0] + 1;
+        int yRange = rect[3] - rect[1] + 1;
+        
+        int x = rect[0] + rng() % xRange;
+        int y = rect[1] + rng() % yRange;
+        
+        return {x, y};
+    }
+};
